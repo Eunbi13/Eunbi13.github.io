@@ -1,5 +1,30 @@
 <html>
 	<body>
+		<script>
+			import 'react-notion/src/styles.css';
+import 'prismjs/themes/prism-tomorrow.css'; // only needed for code highlighting
+
+export default function ReactNotion() {
+  const [response, setResponse] = useState({});
+
+  useEffect(() => {
+    const NOTION_PAGE_ID = 'Notion-API-Workspace-311c5a7a98fd427b823b9685628669da';
+    axios
+      .get(`https://notion-api.splitbee.io/v1/page/${NOTION_PAGE_ID}`)
+      .then(({ data }) => {
+        setResponse(data);
+      });
+  }, []);
+
+  return (
+    Object.keys(response).length && (
+      <NotionRenderer blockMap={response} fullPage={true} />
+    )
+  );
+}
+		</script>
+		
+		
 		Hello! This is the first page!
 	</body>
 </html>
